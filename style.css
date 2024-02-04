@@ -1,0 +1,25 @@
+:root {
+    --primary: #EB5B26;
+    --secondary: #101010;
+    --light: #1010101A;
+}
+
+#worksheet_table {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    max-width: 920px;
+    margin-inline: auto;
+    text-align: right;
+    place-items: center;
+    gap: 20px;
+}
+
+.question_number {
+    background: var(--light);
+    min-width: 50px;
+    display: inline-block;
+}
+
+.cell.answer_cell {
+    background: var(--light);
+}
