@@ -4,9 +4,13 @@
     --light: #1010101A;
 }
 
+.main {
+    max-width: 540px;
+}
+
 #worksheet_table {
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(5,1fr);
     max-width: 920px;
     margin-inline: auto;
     text-align: right;
