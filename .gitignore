@@ -1,0 +1,7 @@
+.idea
+.phpdoc
+*.bak
+*.log
+/vendor/
+/composer.lock
+/composer.phar
