@@ -1,0 +1,31 @@
+#worksheet_table {
+	margin: 0 auto;
+}
+
+.cell-bg {
+	background-color: #E7E7E7;
+    padding: 5px;
+}
+
+.cell {
+    padding-right: 5px;
+}
+
+.table_row {
+	width: 18%;
+    float: left;
+    margin: 0 10px 10px 10px;
+    border: 1px solid rgba(0, 0, 0, 0); /* Border is required to align the table */
+}
+
+.table_row table {
+    text-align: right;
+    border-width: 1px;
+    border-style: dashed;
+    border-color: rgba(16,16,16,0.5);
+    width: 100%;
+}
+
+.question_number {
+    font-size: 1rem;
+}

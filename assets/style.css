@@ -14,8 +14,8 @@
     max-width: 920px;
     margin-inline: auto;
     text-align: right;
-    place-items: center;
     gap: 20px;
+    padding: 10px;
 }
 
 .question_number {
@@ -26,4 +26,10 @@
 
 .cell.answer_cell {
     background: var(--light);
+}
+
+@media (max-width:767px) {
+    #worksheet_table {
+        grid-template-columns: repeat(2,1fr);
+    }
 }
