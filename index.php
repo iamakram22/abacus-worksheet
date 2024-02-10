@@ -4,7 +4,7 @@ include('header.php');
 <section class="main container">
     <div class="container">
 
-        <h1>Abacus Worksheet Generator</h1>
+        <h1 class="mb-4 mt-2">Generate Worksheet</h1>
         
         <form action="generate_worksheet.php" method="post" id="worksheet_generator_form">
 
@@ -51,6 +51,9 @@ include('header.php');
 
         </form>
 
+    </div>
+    <div id="credit" class="bg-secondary-subtle text-center p-2 position-absolute bottom-0 start-0 z-n1">
+        Tool developed by <a href="https://hashtagweb.in" target="_blank">Hashtagweb.in</a>.
     </div>
 </section>
 

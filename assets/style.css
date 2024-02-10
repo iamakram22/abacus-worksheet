@@ -1,7 +1,21 @@
 :root {
     --primary: #EB5B26;
     --secondary: #101010;
-    --light: #1010101A;
+    --light: var(--bs-secondary-bg-subtle, #1010101A);
+}
+
+html,body {
+    overflow-x: hidden;
+}
+
+.btn-primary,.btn-primary:disabled {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
 }
 
 .main {
@@ -26,6 +40,10 @@
 
 .cell.answer_cell {
     background: var(--light);
+}
+
+#credit {
+    width: 100%;
 }
 
 @media (max-width:767px) {
