@@ -10,7 +10,7 @@ include('header.php');
 
             <div class="input-group mb-3">
                 <span class="input-group-text col-7">Number of Digits:</span>
-                <input type="number" id="number_digits" name="number_digits" class="form-control" value="2" min="2" max="10">
+                <input type="number" id="number_digits" name="number_digits" class="form-control" value="1" min="1" max="10">
             </div>
             
             <div class="input-group mb-3">

@@ -22,15 +22,23 @@ for ($i = 0; $i < $number_questions; $i++) {
     $content .= '<table><tr><td>';
     $content .= '<div class="question_number cell cell-bg">Q. ' . ($i + 1) . '</div>';
 
+    $sum = array();
     for ($j = 0; $j < $number_rows; $j++) {
         $num = rand(1, 10 ** $number_digits);
-        if (!empty($include_subtraction)) {
-            $num = rand(-$number_digits, $number_digits) < 0.5 ? -$num : $num;
+        $num = $num == 10 ? 9 : $num;
+        $sum[$j] = $num;
+        if (!empty($include_subtraction) && $j != 0) {
+            $num = rand(-10, 10) < 0 ? $num * -1 : $num;
+            $sum[$j] = $num;
+            while(array_sum($sum) < 0) {
+                $num = rand(-10, 10) < 0 ? $num * -1 : $num;
+                $sum[$j] = $num;
+            }
         }
         $content .= '<div class="cell">' . $num . '</div>';
     }
 
-    $content .= '<div class="cell answer_cell cell-bg"><span class="operator">' . $operator . '</span><code>___________</code></div>';
+    $content .= '<div class="cell answer_cell cell-bg"><span class="operator">=</span><code>___________</code></div>';
     $content .= '</td></tr></table>';
     $content .= '</div>';
 }
