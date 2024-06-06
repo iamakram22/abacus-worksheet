@@ -6,7 +6,15 @@ include('header.php');
 
         <h1 class="mb-4 mt-2">Generate Worksheet</h1>
         
-        <form action="generate_worksheet.php" method="post" id="worksheet_generator_form">
+        <form action="./generate_worksheet.php" method="post" id="worksheet_generator_form">
+
+            <div class="input-group mb-3">
+                <span class="input-group-text col-7">Worksheet Type:</span>
+                <select class="form-select" name="worksheet_type" id="worksheet_type">
+                    <option value="ab">Abacus</option>
+                    <option value="vm">Vedic Maths</option>
+                </select>
+            </div>
 
             <div class="input-group mb-3">
                 <span class="input-group-text col-7">Number of Digits:</span>
@@ -26,10 +34,12 @@ include('header.php');
             <div class="input-group mb-3">
                 <span class="input-group-text col-7">Operator:</span>
                 <select class="form-select" name="operator" id="operator">
-                    <option value="+">Addition (+)</option>
-                    <option value="-">Subtraction (-)</option>
-                    <option value="x">Multiplication (x)</option>
-                    <option value="/">Division (/)</option>
+                    <option value="+" class="ab-option">Addition (+)</option>
+                    <option value="-" class="ab-option">Subtraction (-)</option>
+                    <option value="x" class="ab-option">Multiplication (x)</option>
+                    <option value="/" class="ab-option">Division (/)</option>
+                    <option value="sr" class="vm-option">Square Root (&#8730;)</option>
+                    <option value="cr" class="vm-option">Square Cube (&#8731;)</option>
                 </select>
             </div>
 
