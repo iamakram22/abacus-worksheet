@@ -12,24 +12,25 @@ $number_questions = $_POST['number_questions'];
 $operator = $_POST['operator'];
 $include_subtraction = isset($_POST['include_subtraction']) ? $_POST['include_subtraction'] : false;
 $generate_pdf = isset($_POST['generate_pdf']) ? $_POST['generate_pdf'] : false;
-$vmoperator;
 
 // change HTML code to text
 if($worksheet_type === 'vm') {
     switch ($operator) {
         case 'cr':
-            $vmoperator = $operator;
-            $operator = '&#8731;';
+            $operator = '&#8731;'; // cube root
             break;
         
+        case 'sr':
+            $operator = '&#8730;'; // square root
+            break;
+            
         default:
-            $vmoperator = $operator;
-            $operator = '&#8730;';
+            $operator;
             break;
     }
-} else {
-    if ($operator === '/') $operator = '÷';
 }
+
+if ($operator === '/') $operator = '÷';
 
 function generateRandomNumber($digits) {
     return rand(1, 10 ** $digits);

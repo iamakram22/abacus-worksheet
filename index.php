@@ -39,7 +39,7 @@ include('header.php');
                     <option value="x" class="ab-option">Multiplication (x)</option>
                     <option value="/" class="ab-option">Division (/)</option>
                     <option value="sr" class="vm-option">Square Root (&#8730;)</option>
-                    <option value="cr" class="vm-option">Square Cube (&#8731;)</option>
+                    <option value="cr" class="vm-option">Cube Root (&#8731;)</option>
                 </select>
             </div>
 

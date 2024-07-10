@@ -30,6 +30,15 @@ $(document).ready(function(){
     }
 
     /**
+     * Chnage number of rows field visibility & value
+     * @param {boolean} hide 
+     * @param {number} value 
+     */
+    function visibilityNumberRows(hide = false, value = 5) {
+        hide ? numberRows.val(value).parent().hide() : numberRows.val(value).parent().show();
+    }
+
+    /**
      * Change worksheet form fields
      * @param {string} type 
      */
@@ -41,8 +50,7 @@ $(document).ready(function(){
             changeSubtractionField();
         } else {
             vmOptions.show();
-            subtractionField.hide(100);
-            numberRows.val(1).parent().hide(100);
+            // subtractionField.hide(100);
             changeSubtractionField();
         }
     }
@@ -53,18 +61,25 @@ $(document).ready(function(){
         if(value === '+') {
             visibilitySubtractionField(false)
             changeSubtractionField();
+            visibilityNumberRows(false, 5);
         } else if( value === '/') {
-            numberRows.val(2);
             changeSubtractionField(true,true);
+            visibilityNumberRows(false, 2);
+        } else if(value === 'sr' || value === 'cr') {
+            visibilityNumberRows(true, 1);
+            visibilitySubtractionField();
+            changeSubtractionField(false,true);
         } else {
             visibilitySubtractionField();
             changeSubtractionField(false,true);
+            visibilityNumberRows(false, 5);
         }
     });
 
     // Show hide VM options on type change
     const worksheetType = $('#worksheet_type');
     worksheetType.on('change', function() {
+        operator.val('+');
         $(this).val() === 'vm' ? changeForm('vm') : changeForm();
     });
 });
