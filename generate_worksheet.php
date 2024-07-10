@@ -10,8 +10,8 @@ $number_digits = $_POST['number_digits'];
 $number_rows = $_POST['number_rows'];
 $number_questions = $_POST['number_questions'];
 $operator = $_POST['operator'];
-$include_subtraction = isset($_POST['include_subtraction']) ? $_POST['include_subtraction'] : false;
-$generate_pdf = isset($_POST['generate_pdf']) ? $_POST['generate_pdf'] : false;
+$include_subtraction = isset($_POST['include_subtraction']) ?? false;
+$generate_pdf = isset($_POST['generate_pdf']) ?? false;
 
 // change HTML code to text
 if($worksheet_type === 'vm') {
