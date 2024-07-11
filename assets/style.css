@@ -32,6 +32,13 @@ html,body {
     padding: 10px;
 }
 
+.worksheet_type {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5em;
+    padding-bottom: 10px;
+}
+
 .question_number {
     background: var(--light);
     min-width: 50px;

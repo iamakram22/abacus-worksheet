@@ -14,23 +14,33 @@ $include_subtraction = isset($_POST['include_subtraction']) ?? false;
 $generate_pdf = isset($_POST['generate_pdf']) ?? false;
 
 // change HTML code to text
-if($worksheet_type === 'vm') {
-    switch ($operator) {
-        case 'cr':
-            $operator = '&#8731;'; // cube root
-            break;
+// if($worksheet_type === 'vm') {
+//     switch ($operator) {
+//         case 'cr':
+//             $operator = '&#8731;'; // cube root
+//             break;
         
-        case 'sr':
-            $operator = '&#8730;'; // square root
-            break;
+//         case 'sr':
+//             $operator = '&#8730;'; // square root
+//             break;
             
-        default:
-            $operator;
-            break;
-    }
-}
+//         default:
+//             $operator;
+//             break;
+//     }
+// }
 
-if ($operator === '/') $operator = '÷';
+// if ($operator === '/') $operator = '÷';
+
+$operatorTitles = [
+    '+' => 'Addition',
+    '-' => 'Subtraction',
+    'x' => 'Multiplication',
+    '/' => 'Division',
+    'sr' => 'Square Root',
+    'cr' => 'Cube Root',
+];
+$title = isset($operatorTitles[$operator]) ? $operatorTitles[$operator] : 'Unknown Operator';
 
 function generateRandomNumber($digits) {
     return rand(1, 10 ** $digits);
@@ -40,6 +50,7 @@ function generateRandomNumber($digits) {
 $content = '';
 
 // Generate worksheet data
+$content .= '<div class="worksheet_type">'. $title .'</div>';
 $content .= '<div id="worksheet_table">';
 for ($i = 0; $i < $number_questions; $i++) {
     $content .= '<div class="table_row">';
@@ -62,7 +73,8 @@ for ($i = 0; $i < $number_questions; $i++) {
             }
         }
         $content .= '<div class="cell">';
-        $content .=  $j === ($number_rows - 1) ? $operator . ' ' . $num : $num;
+        $content .=  $num;
+        // $content .=  $j === ($number_rows - 1) ? $operator . ' ' . $num : $num;
         $content .= '</div>';
     }
 

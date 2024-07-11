@@ -2,6 +2,13 @@
 	margin: 0 auto;
 }
 
+.worksheet_type {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5em;
+    padding-bottom: 10px;
+}
+
 .cell-bg {
 	background-color: #E7E7E7;
     padding: 5px;
