@@ -13,25 +13,10 @@ $operator = $_POST['operator'];
 $include_subtraction = isset($_POST['include_subtraction']) ?? false;
 $generate_pdf = isset($_POST['generate_pdf']) ?? false;
 
-// change HTML code to text
-// if($worksheet_type === 'vm') {
-//     switch ($operator) {
-//         case 'cr':
-//             $operator = '&#8731;'; // cube root
-//             break;
-        
-//         case 'sr':
-//             $operator = '&#8730;'; // square root
-//             break;
-            
-//         default:
-//             $operator;
-//             break;
-//     }
-// }
+// Set worksheet type
+$worksheet_type = $worksheet_type === 'ab' ? 'Abacus' : 'Vedic Maths';
 
-// if ($operator === '/') $operator = '÷';
-
+// Assign operator Text
 $operatorTitles = [
     '+' => 'Addition',
     '-' => 'Subtraction',
@@ -42,6 +27,11 @@ $operatorTitles = [
 ];
 $title = isset($operatorTitles[$operator]) ? $operatorTitles[$operator] : 'Unknown Operator';
 
+/**
+ * Generate random number
+ * @param int $digits
+ * @return int
+ */
 function generateRandomNumber($digits) {
     return rand(1, 10 ** $digits);
 }
@@ -89,10 +79,9 @@ if($generate_pdf) {
 
     $mpdf->SetAuthor('Hashtagweb.in');
     $mpdf->SetCreator('Hashtagweb.in');
-    $mpdf->SetTitle('Abacus Worksheet');
-    $mpdf->SetSubject('Abacus Worksheet');
-
-    $header = 'Abacus Worksheet | | <a href="https://iiva.in">AVAS IIVA</a>';
+    $mpdf->SetTitle( $worksheet_type . ' Worksheet');
+    $mpdf->SetSubject($worksheet_type .' Worksheet');
+    $header = $worksheet_type . ' Worksheet | | <a href="https://iiva.in">AVAS IIVA</a>';
     $footer = 'Developed by <a href="https://hashtagweb.in">Hashtagweb.in</a> | | {PAGENO}';
 
     $mpdf->SetHeader($header);
