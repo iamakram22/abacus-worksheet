@@ -1,15 +1,17 @@
 $(document).ready(function(){
     $('#worksheet_generator_form').validate();
 
-    // Hide VM options first
-    const vmOptions = $('.vm-option');
-    vmOptions.hide();
-
+    const abFields = $('.ab_field');
+    const vmFields = $('.vm_field');
+    
     const numberRows = $('#number_rows');
     const subtractionField = $('#subtraction_field');
     const includeSubtraction = $('#include_subtraction');
     const operator = $('#operator');
     const vmOperators = ['sr', 'cr'];
+    
+    // Hide VM options Init
+    toggleFields();
 
     /**
      * Change Include Subtraction field attributes
@@ -39,23 +41,24 @@ $(document).ready(function(){
     }
 
     /**
-     * Change worksheet form fields
-     * @param {string} type 
+     * Toggle AB & VM Fields based on type
+     * @param {boolean} ab 
      */
-    function changeForm(type = 'ab') {
-        if(type === 'ab') {
-            vmOptions.hide();
-            subtractionField.show(100);
-            numberRows.val(5).parent().show(100);
-            changeSubtractionField();
+    function toggleFields(ab = true) {
+        if(ab) {
+            numberRows.val(5);
+            abFields.show();
+            vmFields.hide();
         } else {
-            vmOptions.show();
-            // subtractionField.hide(100);
-            changeSubtractionField();
+            numberRows.val(1);
+            abFields.hide();
+            vmFields.show();
         }
     }
 
-    // Remove options on operator change
+    /**
+     * Remove options on operator change
+     */
     operator.on('change', function(){
         let value = $(this).val();
         if(value === '+') {
@@ -65,10 +68,6 @@ $(document).ready(function(){
         } else if( value === '/') {
             changeSubtractionField(true,true);
             visibilityNumberRows(false, 2);
-        } else if(value === 'sr' || value === 'cr') {
-            visibilityNumberRows(true, 1);
-            visibilitySubtractionField();
-            changeSubtractionField(false,true);
         } else {
             visibilitySubtractionField();
             changeSubtractionField(false,true);
@@ -76,10 +75,12 @@ $(document).ready(function(){
         }
     });
 
-    // Show hide VM options on type change
+    /**
+     * Toggle VM options on type change
+     */
     const worksheetType = $('#worksheet_type');
     worksheetType.on('change', function() {
         operator.val('+');
-        $(this).val() === 'vm' ? changeForm('vm') : changeForm();
+        $(this).val() === 'ab' ? toggleFields() : toggleFields(false);
     });
 });
