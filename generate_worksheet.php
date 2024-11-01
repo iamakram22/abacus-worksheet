@@ -17,7 +17,7 @@ $include_subtraction = isset($_POST['include_subtraction']) ?? false;
 $generate_pdf = isset($_POST['generate_pdf']) ?? false;
 
 // Set worksheet type
-$worksheet_title = $worksheet_type === 'ab' ? 'Abacus' : 'Vedic Maths';
+$worksheet_title = $worksheet_type === 'ab' ? 'Abacus' : 'Easy Maths';
 
 // Assign operator Text
 $operatorTitles = [
