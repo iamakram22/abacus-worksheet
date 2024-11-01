@@ -29,7 +29,7 @@ function generateDropdown()
                 <span class="input-group-text col-7">Worksheet Type:</span>
                 <select class="form-select" name="worksheet_type" id="worksheet_type" title="Select Worksheet Type">
                     <option value="ab">Abacus</option>
-                    <option value="vm">Vedic Maths</option>
+                    <option value="vm">Easy Maths (EM)</option>
                 </select>
             </div>
 
