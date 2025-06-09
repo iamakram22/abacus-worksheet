@@ -1,86 +1,145 @@
-$(document).ready(function(){
-    $('#worksheet_generator_form').validate();
+$(document).ready(function () {
+  // Automatically derive the base path from the current script's location
+  const basePath = `${window.location.origin}${window.location.pathname.replace(
+    /\/[^\/]+$/,
+    ""
+  )}`.replace(/\/+$/, "");
+  const apiUrl = `${basePath}/api.php`;
 
-    const abFields = $('.ab_field');
-    const vmFields = $('.vm_field');
-    
-    const numberRows = $('#number_rows');
-    const subtractionField = $('#subtraction_field');
-    const includeSubtraction = $('#include_subtraction');
-    const operator = $('#operator');
-    const vmOperators = ['sr', 'cr'];
-    
-    // Hide VM options Init
-    toggleFields();
+  $("#worksheet_generator_form").validate();
 
-    /**
-     * Change Include Subtraction field attributes
-     * @param {boolean} checked
-     * @param {boolean} disabled
-     */
-    function changeSubtractionField(checked = false, disabled = false) {
-        includeSubtraction.prop({'checked': checked, 'disabled': disabled})
+  const submitBtn = $("#generate_worksheet");
+
+  /*
+   * Function to enable/disable submit button
+   */
+  function toggleSubmit() {
+    if ($form.valid()) {
+      submitBtn.prop("disabled", false);
+    } else {
+      submitBtn.prop("disabled", true);
     }
+  }
 
-    /**
-     * Change subtraction field visibility
-     * @param {boolean} hide 
-     * @param {number} animation 
-     */
-    function visibilitySubtractionField(hide = true, animation = 100) {
-        hide ? subtractionField.hide(animation) : subtractionField.show(animation);
-    }
+  /**
+   * Toggle VM options on type change
+   */
+  const worksheetType = $("#worksheet_type");
 
-    /**
-     * Chnage number of rows field visibility & value
-     * @param {boolean} hide 
-     * @param {number} value 
-     */
-    function visibilityNumberRows(hide = false, value = 5) {
-        hide ? numberRows.val(value).parent().hide() : numberRows.val(value).parent().show();
-    }
+  worksheetType.on("change", function () {
+    const subject = $(this).val();
+    if (!subject) return;
 
-    /**
-     * Toggle AB & VM Fields based on type
-     * @param {boolean} ab 
-     */
-    function toggleFields(ab = true) {
-        if(ab) {
-            numberRows.val(5);
-            abFields.show();
-            vmFields.hide();
-        } else {
-            numberRows.val(1);
-            abFields.hide();
-            vmFields.show();
-        }
-    }
+    submitBtn.prop("disabled", true);
 
-    /**
-     * Remove options on operator change
-     */
-    operator.on('change', function(){
-        let value = $(this).val();
-        if(value === '+') {
-            visibilitySubtractionField(false)
-            changeSubtractionField();
-            visibilityNumberRows(false, 5);
-        } else if( value === '/') {
-            changeSubtractionField(true,true);
-            visibilityNumberRows(false, 2);
-        } else {
-            visibilitySubtractionField();
-            changeSubtractionField(false,true);
-            visibilityNumberRows(false, 5);
-        }
+    $.ajax({
+      url: apiUrl,
+      method: "GET",
+      dataType: "json",
+      data: {
+        action: "getClasses",
+        subject: subject,
+      },
+      success: function (response) {
+        const $class = $("#class");
+        $class.empty().append('<option value="">Select Class</option>');
+
+        // Correctly loop over `response`, not `classes`
+        $.each(response, function (_, className) {
+          $class.append(`<option value="${className}">${className}</option>`);
+        });
+
+        $class.prop("disabled", false);
+        $("#topic")
+          .empty()
+          .append(
+            '<option value="" selected disabled hidden>Select Topic</option>'
+          )
+          .prop("disabled", true);
+        $("#fileList").empty();
+      },
+      error: function (xhr, status, error) {
+        console.error("AJAX error:", error);
+        alert("Failed to load classes");
+      },
     });
+  });
 
-    /**
-     * Toggle VM options on type change
-     */
-    const worksheetType = $('#worksheet_type');
-    worksheetType.on('change', function() {
-        operator.val('+');
-        $(this).val() === 'ab' ? toggleFields() : toggleFields(false);
+  $("#class").on("change", function () {
+    const subject = worksheetType.val();
+    const className = $(this).val();
+    if (!className) return;
+
+    submitBtn.prop("disabled", true);
+
+    $.ajax({
+      url: apiUrl,
+      method: "GET",
+      dataType: "json",
+      data: {
+        action: "getTopics",
+        subject: subject,
+        class: className,
+      },
+      success: function (response) {
+        const $topic = $("#topic");
+        $topic
+          .empty()
+          .append(
+            '<option value="" selected disabled hidden>Select Topic</option>'
+          );
+        $.each(response, function (_, topicName) {
+          $topic.append(`<option value="${topicName}">${topicName}</option>`);
+        });
+        $topic.prop("disabled", false);
+        $("#fileList").empty();
+      },
+      error: function (xhr, status, error) {
+        console.error("AJAX error:", error);
+        alert("Failed to load classes");
+      },
     });
+  });
+
+  $("#topic").on("change", function () {
+    const subject = worksheetType.val();
+    const className = $("#class").val();
+    const topic = $(this).val();
+    if (!topic) return;
+
+    submitBtn.prop("disabled", true);
+
+    $.ajax({
+      url: apiUrl,
+      method: "GET",
+      dataType: "json",
+      data: {
+        action: "getFiles",
+        subject: subject,
+        class: className,
+        topic: topic,
+      },
+      success: function (response) {
+        const $list = $("#sheet");
+        $list
+          .empty()
+          .append(
+            '<option value="" selected disabled hidden>Select Sheet</option>'
+          );
+        $.each(response, function (_, fileName) {
+          fileName = fileName.replace(".xlsx", "");
+          $list.append(`<option value="${fileName}">${fileName}</option>`);
+        });
+        $list.prop("disabled", false);
+      },
+      error: function (xhr, status, error) {
+        console.error("AJAX error:", error);
+        alert("Failed to load classes");
+      },
+    });
+  });
+
+  $("#sheet").on("change", function () {
+    submitBtn.prop("disabled", false);
+  });
 });
