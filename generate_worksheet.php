@@ -61,7 +61,7 @@ $title = "{$class}: {$topic} - " . explode('.', $sheet)[0];
 // Generate worksheet data
 $content .= '<div class="worksheet_type">' . $title . '</div>';
 $content .= '<div id="worksheet_table">';
-$filePath = "./{$worksheet_type}/{$class}/{$topic}/{$sheet}";
+$filePath = "./{$worksheet_type}/{$class}/{$topic}/{$sheet}.xlsx";
 
 $questions = getQuestionsFromXlsx($filePath);
 $randomQuestions = getRandomQuestions($questions, $number_questions);
